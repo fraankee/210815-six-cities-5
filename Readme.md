@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Dasha Dasha](https://up.htmlacademy.ru/react/5/user/210815).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Булах](https://htmlacademy.ru/profile/id1213123).
 
 ---
 
