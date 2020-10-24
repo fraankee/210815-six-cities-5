@@ -7,13 +7,13 @@ import Room from "../room/room";
 import SignIn from "../sign-in/sign-in";
 
 const App = (props) => {
-  const {placesFound} = props;
+  const {placesFound, offers} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Main placesFound={placesFound} />
+          <Main placesFound={placesFound} offers={offers} />
         </Route>
       </Switch>
       <Switch >
@@ -23,13 +23,20 @@ const App = (props) => {
       </Switch>
       <Switch >
         <Route exact path="/favorites">
-          <Favorites />
+          <Favorites
+            offers={offers.filter((offer) => offer.bookmark)}
+          />
         </Route>
       </Switch>
       <Switch >
-        <Route exact path="/offer/:id">
-          <Room />
-        </Route>
+        <Route exact path="/offer/:id"
+          render={({match}) => (
+            <Room
+              offer={offers.find((offer) => offer.id === match.params.id)}
+              offers={offers}
+            />
+          )}
+        />
       </Switch>
     </BrowserRouter>
   );
@@ -37,6 +44,8 @@ const App = (props) => {
 
 App.propTypes = {
   placesFound: PropTypes.number.isRequired,
+  offer: PropTypes.object,
+  offers: PropTypes.array.isRequired,
 };
 
 export default App;
