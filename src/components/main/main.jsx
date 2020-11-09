@@ -1,11 +1,18 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import PlacesList from "../places-list/places-list";
+import MainMap from "../main-map/main-map";
 
 class Main extends PureComponent {
 
   render() {
     const {offers} = this.props;
+    const cityCoords = offers.map((offer) => {
+      return {
+        coords: offer.coords,
+        city: offer.address
+      };
+    });
 
     return (
       <div className="page page--gray page--main">
@@ -95,7 +102,9 @@ class Main extends PureComponent {
                 </div>
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <MainMap coords={cityCoords}/>
+                </section>
               </div>
             </div>
           </div>
