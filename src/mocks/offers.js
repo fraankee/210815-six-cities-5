@@ -7,6 +7,7 @@ export default [
     rating: 4.8,
     price: 120,
     address: `Amsterdam`,
+    coords: [52.3909553943508, 4.85309666406198],
     bookmark: true,
     features: {
       type: `Apartment`,
@@ -39,6 +40,7 @@ export default [
     rating: 4,
     price: 80,
     address: `Amsterdam`,
+    coords: [52.369553943508, 4.85309666406198],
     bookmark: true,
     features: {
       type: `Private room`,
@@ -71,6 +73,7 @@ export default [
     rating: 4,
     price: 132,
     address: `Praha`,
+    coords: [52.3909553943508, 4.929309666406198],
     bookmark: true,
     features: {
       type: `Apartment`,
@@ -103,6 +106,7 @@ export default [
     rating: 5,
     price: 180,
     address: `Praha`,
+    coords: [52.3809553943508, 4.939309666406198],
     bookmark: true,
     features: {
       type: `Apartment`,

@@ -58,6 +58,7 @@ PlaceCard.propTypes = {
     rating: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
     address: PropTypes.string.isRequired,
+    coords: PropTypes.array.isRequired,
     bookmark: PropTypes.bool.isRequired,
     features: PropTypes.shape({
       type: PropTypes.string.isRequired,
