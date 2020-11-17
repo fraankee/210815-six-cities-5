@@ -1,8 +1,10 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Link} from 'react-router-dom';
-import FavoritesList from "../favorites-list/favorites-list";
+import PlacesList from "../places-list/places-list";
 import ReviewForm from "../review-form/review-form";
+import ReviewsList from "../reviews-list/reviews-list";
+import MainMap from "../main-map/main-map";
 
 class Room extends PureComponent {
   constructor(props) {
@@ -11,6 +13,22 @@ class Room extends PureComponent {
 
   render() {
     const {offer, offers} = this.props;
+    const nearPlaces = [];
+    const nearPlacesCount = 3;
+
+    offers.filter(((offerItem) => offerItem.address === offer.address && offerItem.id !== offer.id)).forEach((offerItem, i) => {
+      if (i < nearPlacesCount) {
+        nearPlaces.push(offerItem);
+      }
+    });
+
+    const cityCoords = nearPlaces.map((nearPlace) => {
+      return {
+        coords: nearPlace.coords,
+        city: nearPlace.address
+      };
+    });
+
     return (
       <div className="page">
         <header className="header">
@@ -115,44 +133,30 @@ class Room extends PureComponent {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews &middot; <span
-                    className="reviews__amount">{offer.reviews.length}</span></h2>
-                  <ul className="reviews__list">
-                    {offer.reviews.map((review) => (
-                      <li key={review} className="reviews__item">
-                        <div className="reviews__user user">
-                          <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                            <img className="reviews__avatar user__avatar" src={review.avatar} width="54" height="54" alt="Reviews avatar"/>
-                          </div>
-                          <span className="reviews__user-name">{review.name}</span>
-                        </div>
-                        <div className="reviews__info">
-                          <div className="reviews__rating rating">
-                            <div className="reviews__stars rating__stars">
-                              <span style={{width: (review.rating * 100 / 5) + `%`}}></span>
-                              <span className="visually-hidden">Rating</span>
-                            </div>
-                          </div>
-                          <p className="reviews__text">{review.review}</p>
-                          <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                  <ReviewsList reviews={offer.reviews}>
+                    <h2 className="reviews__title">Reviews &middot; <span
+                      className="reviews__amount">{offer.reviews.length}</span></h2>
+                  </ReviewsList>
                   <ReviewForm/>
                 </section>
               </div>
             </div>
-            <section className="property__map map"></section>
+            {nearPlaces.length > 0 &&
+              <section className="property__map map">
+                <MainMap coords={cityCoords}/>
+              </section>
+            }
           </section>
-          <div className="container">
-            <section className="near-places places">
-              <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <div className="near-places__list places__list">
-                <FavoritesList offers={offers} city={offer.address} id={offer.id}/>
-              </div>
-            </section>
-          </div>
+          {nearPlaces.length > 0 &&
+            <div className="container">
+              <section className="near-places places">
+                <h2 className="near-places__title">Other places in the neighbourhood</h2>
+                <div className="near-places__list places__list">
+                  <PlacesList offers={nearPlaces}/>
+                </div>
+              </section>
+            </div>
+          }
         </main>
       </div>
     );
